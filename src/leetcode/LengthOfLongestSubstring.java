@@ -18,42 +18,44 @@ public class LengthOfLongestSubstring {
         // Start typing your Java solution below
         // DO NOT write main() function
     	
-        int length = s.length();    	
-    	java.util.Set<Character> positions = new java.util.HashSet<Character>();    	
-    	int globalMaxLength = 0;    	
-    	int localMaxLength = 0;
-    	int now=0;
-    	
-    	while(now < length){
-    		char nowChar = s.charAt(now);
-    		if (positions.contains(nowChar)){    			
-    			
-    	    	if (localMaxLength>globalMaxLength){
-    	    		globalMaxLength = localMaxLength;
-    	    	}
-    	    	
-                positions.clear();
-                                
-                localMaxLength = 0;
-    	    	int lastPosition = now;
-                char lastChar = s.charAt(lastPosition);
-                while(!positions.contains(lastChar))
-                {
-                    positions.add(lastChar);
-                    localMaxLength++;
-                    lastChar = s.charAt(--lastPosition);
-                }
-    		}else{
-    			positions.add(nowChar);
-    			localMaxLength++;
-    		}
-            now++;
-    	}
-    	
-    	if (localMaxLength>globalMaxLength){
-    		globalMaxLength = localMaxLength;
-    	}
-    	
-        return globalMaxLength;
+        int length = s.length();
+		java.util.Map<Character, Integer> positions = new java.util.HashMap<Character, Integer>();		
+		int lastStartPosition = 0;
+		int globalMaxLength = 0;    	
+		int now=0;
+		
+		while(now < length){
+			char nowChar = s.charAt(now);
+			if (positions.containsKey(nowChar)){    			
+				
+				int lastPosition = positions.get(nowChar);
+				
+				if (lastPosition>=lastStartPosition){
+					
+					int localMaxLength = now - lastStartPosition;
+					
+			    	if (localMaxLength>globalMaxLength){
+			    		globalMaxLength = localMaxLength;
+			    	}
+		
+			    	char nextChar = s.charAt(lastPosition+1);
+			    	if (nextChar==nowChar){
+			    		lastStartPosition = now;
+			    	}else{
+			    		lastStartPosition = positions.get(nextChar);
+			    	}
+				}
+			}
+			
+			positions.put(nowChar, now);
+		    now++;
+		}
+		
+		int localMaxLength = now - lastStartPosition;
+		if (localMaxLength>globalMaxLength){
+			globalMaxLength = localMaxLength;
+		}
+		
+		return globalMaxLength;
     }
 }
