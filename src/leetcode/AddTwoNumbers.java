@@ -33,8 +33,8 @@ public class AddTwoNumbers {
 		ListNode nn = null;
 
 		int carry = 0;
-		while (l1 != null && l2 != null) {
-			int sum = l1.val + l2.val + carry;
+		while (l1 != null || l2 != null) {
+			int sum = (l1==null?0:l1.val) + (l2==null?0:l2.val) + carry;
 			int val = sum;
 			if (sum > 9) {
 				carry = 1;
@@ -53,28 +53,6 @@ public class AddTwoNumbers {
 
 			l1 = l1.next;
 			l2 = l2.next;
-		}
-
-		ListNode ll = l1 == null ? l2 : l1;
-		while (ll != null) {
-			int sum = ll.val + carry;
-			int val = sum;
-			if (sum > 9) {
-				val = sum - 10;
-				carry = 1;
-			} else {
-				carry = 0;
-			}
-
-			if (head == null) {
-				head = new ListNode(val);
-				nn = head;
-			} else {
-				nn.next = new ListNode(val);
-				nn = nn.next;
-			}
-
-			ll = ll.next;
 		}
 
 		if (carry == 1) {
