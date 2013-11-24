@@ -21,16 +21,10 @@ package leetcode;
  */
 public class TwoSum {
 
-    public int[] twoSum(int[] numbers, int target) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-    	return this.secondSolution(numbers, target);
-    }
-
     /*
      * O(N^2)
      */
-    private int[] firstSolution(int[] numbers, int target){
+    public int[] firstSolution(int[] numbers, int target){
     	for(int i=0; i<numbers.length; i++){
     		for(int j=i+1; j<numbers.length; j++){
     			if (numbers[i]+numbers[j]==target){
@@ -44,7 +38,7 @@ public class TwoSum {
     /*
      * O(N) with more space consumption
      */
-    private int[] secondSolution(int[] numbers, int target){    	
+    public int[] secondSolution(int[] numbers, int target){    	
     	java.util.Map<Integer, Integer> positions = new java.util.HashMap<Integer, Integer>();    	
     	for(int i=0; i<numbers.length; i++){    		
     		int theOther = target - numbers[i];
