@@ -13,7 +13,16 @@ package leetcode;
  *
  */
 public class FindMedianSortedArrays {
-    public double findMedianSortedArrays(int A[], int B[]) {
+	
+	public static void main(String[] args){
+		FindMedianSortedArrays c = new FindMedianSortedArrays();
+		System.out.println(c.findMedianSortedArrays(new int[]{}, new int[]{1}));
+		System.out.println(c.findMedianSortedArrays(new int[]{1}, new int[]{1}));
+		System.out.println(c.findMedianSortedArrays(new int[]{1,2}, new int[]{1,2}));
+		System.out.println(c.findMedianSortedArrays(new int[]{1,2}, new int[]{1,2,3}));
+	}
+
+    public double findMedianSortedArraysOk(int A[], int B[]) {
         // Start typing your Java solution below
         // DO NOT write main() function
         int lengthOfA = A.length;
@@ -75,5 +84,60 @@ public class FindMedianSortedArrays {
             // the total is an even number, return the average of the two values.
             return (preMedianValue + medianValue)/2.0;
         }
+    }
+
+
+	public double findMedianSortedArrays(int A[], int B[]) {
+		
+		int middle = (A.length+B.length)/2+1;
+		double median = findKth(A, B, 0, A.length, 0, B.length, middle);
+		
+		if ((A.length+B.length)%2==0){
+			median += findKth(A,B,0,A.length,0,B.length,middle-1);
+			median /= 2;
+		}
+		
+		return median;
+	}
+	
+    private int findKth(int A[], int B[], int startA, int endA, int startB, int endB, int k)
+    {
+    	if (startA>=endA) return B[startB+k-1];
+    	if (startB>=endB) return A[startA+k-1];
+    	if (k<=1) return Math.min(A[startA], B[startB]);
+    
+    	int middleA = startA + (endA-startA)/2;
+    	int middleB = startB + (endB-startB)/2;
+    	
+    	int numA = middleA - startA;
+    	int numB = middleB - startB;
+    	
+    	if (A[middleA]>=B[middleB]){
+    		if ((numA+numB>=k-1)){
+    			// A[middleA] is at least larger than k of the elements in the two arrays.
+    			// A[middleA..endA) can be discarded.
+    			return findKth(A, B, startA, middleA, startB, endB, k);
+    		}
+    		else
+    		{
+     			// B[middleB] is at most the (k-1)th element in the two arrays.
+    			// discard B[startB..middleB]
+    			return findKth(A, B, startA, endA, middleB + 1, endB, k - numB - 1);
+    		}
+    	}
+    	else
+    	{
+    		if ((numA+numB>=k-1)){
+    			// B[middleB] is at least larger than k of the elements in the two arrays.
+    			// B[middleB..endB) can be discarded.
+    			return findKth(A, B, startA, endA, startB, middleB, k);
+    		}
+    		else
+    		{
+     			// A[middleA] is at most the (k-1)th element in the two arrays.
+    			// discard A[startA..middleA] 
+    			return findKth(A, B, middleA + 1, endA, startB, endB, k - numA - 1);
+    		}
+    	}
     }
 }
