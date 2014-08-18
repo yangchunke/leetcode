@@ -13,7 +13,12 @@ package leetcode;
  *
  */
 public class FindMedianSortedArrays {
-    public double findMedianSortedArrays(int A[], int B[]) {
+	
+	public static void main(String[] args){
+		FindMedianSortedArrays c = new FindMedianSortedArrays();
+		System.out.println(c.findMedianSortedArrays(new int[]{1}, new int[] {1}));
+	}
+    public double xxfindMedianSortedArrays(int A[], int B[]) {
         // Start typing your Java solution below
         // DO NOT write main() function
         int lengthOfA = A.length;
@@ -74,6 +79,54 @@ public class FindMedianSortedArrays {
         {
             // the total is an even number, return the average of the two values.
             return (preMedianValue + medianValue)/2.0;
+        }
+    }
+
+    public double findMedianSortedArrays(int A[], int B[]) {
+        
+        int middle = (A.length+B.length)/2+1;
+        double middleVal = findKth(A,B,0,A.length,0,B.length,middle);
+        
+        if ((A.length+B.length)%2==0)    
+        {
+            middleVal += findKth(A,B,0,A.length,0,B.length,middle-1);
+            middleVal /= 2.0;
+        }
+        
+        return middleVal;
+    }
+    
+    private int findKth(int A[], int B[], int aStart, int aEnd, int bStart, int bEnd, int k)
+    {
+        if (aStart>=aEnd){
+            return B[bStart+k-1];
+        }
+        
+        if (bStart>=bEnd){
+            return A[aStart+k-1];
+        }
+        
+        if(k<=1){
+            return A[aStart]>B[bStart]?B[bStart]:A[aStart];
+        }
+        
+        int mA = aStart + (aEnd-aStart)/2;
+        int mB = bStart + (bEnd-bStart)/2;
+        
+        if (A[mA]>B[mB]){
+            if (k<(mA+mB)){
+                return findKth(A,B,aStart,mA,bStart,bEnd,k);
+            }else{
+                return findKth(A,B,aStart,aEnd,mB,bEnd,k-mB+bStart);
+            }
+        }
+        else
+        {
+            if (k<(mA+mB)){
+                return findKth(A,B,aStart,aEnd,bStart,mB,k);
+            }else{
+                return findKth(A,B,mA,aEnd,bStart,bEnd,k-mA+aStart);
+            }
         }
     }
 }
