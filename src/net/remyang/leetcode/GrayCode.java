@@ -5,21 +5,27 @@ public class GrayCode {
 
 	public static void main(String[] args) {
 		GrayCode c = new GrayCode();
-		List<Integer> l = c.grayCode(4);
-		for(int i:l){
+		List<Integer> ret = c.grayCode(3);
+		for(int i: ret){
 			System.out.println(i);
 		}
-		System.out.println("*** " + l.size() + " ***");
 	}
-	
-    public List<Integer> grayCode(int n) {
-        if (n==0){ return Arrays.asList(0); }
+
+	public List<Integer> grayCode(int n) {
+        List<Integer> ret = new ArrayList<Integer>();
         
-        List<Integer> ret = new ArrayList<Integer>(grayCode(n-1));
-        int m = 1 << (n-1);
-        for(int j=ret.size()-1;j>=0;j--){
-        	ret.add(ret.get(j)|m);
+        int val = 0;
+        int endBits = n;
+        while(endBits>0){
+            int mask = 1;
+            for(int i=0;i<endBits;i++){
+                ret.add(val);
+                val ^= mask;
+                mask <<=1;
+            }
+            endBits--;
         }
+        ret.add(val);
         
         return ret;
     }
