@@ -25,27 +25,4 @@ public class FlattenBinaryTreeToLinkedList {
         
         return lastVisited;
     }
-    
-    private TreeNode _flatten1(TreeNode parent){
-        
-        TreeNode leftTail = parent;
-        TreeNode rightTail = parent;
-        
-        if (parent.left!=null){
-            rightTail = leftTail = _flatten1(parent.left);
-        }
-
-        if (parent.right!=null){
-            rightTail = _flatten1(parent.right);
-        }
-        
-        if (leftTail!=parent)
-        {
-            leftTail.right = parent.right;
-            parent.right = parent.left;
-            parent.left = null;
-        }
-        
-        return rightTail;
-    }
 }
