@@ -26,6 +26,7 @@ public class FlattenBinaryTreeToLinkedList {
         return lastVisited;
     }
     
+    /*
     private TreeNode _flatten1(TreeNode parent){
         
         TreeNode leftTail = parent;
@@ -48,4 +49,5 @@ public class FlattenBinaryTreeToLinkedList {
         
         return rightTail;
     }
+    */
 }
