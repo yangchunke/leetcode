@@ -1,10 +1,7 @@
-/**
- * 
- */
 package net.remyang.leetcode;
 
 /**
- * http://leetcode.com/onlinejudge#question_3
+ * https://oj.leetcode.com/problems/longest-substring-without-repeating-characters/
  * 
  * Given a string, find the length of the longest substring without repeating characters. 
  * 
@@ -15,8 +12,6 @@ package net.remyang.leetcode;
 public class LengthOfLongestSubstring {
 	
     public int lengthOfLongestSubstring(String s) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
     	
         int length = s.length();
 		java.util.Map<Character, Integer> positions = new java.util.HashMap<Character, Integer>();		

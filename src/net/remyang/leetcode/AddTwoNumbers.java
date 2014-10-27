@@ -1,10 +1,7 @@
-/**
- * Add Two Numbers 
- */
 package net.remyang.leetcode;
 
 /**
- * http://leetcode.com/onlinejudge#question_2
+ * https://oj.leetcode.com/problems/add-two-numbers/
  * 
  * You are given two linked lists representing two non-negative numbers. The
  * digits are stored in reverse order and each of their nodes contain a single
@@ -17,14 +14,13 @@ package net.remyang.leetcode;
 public class AddTwoNumbers {
 
 	public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-		// Start typing your Java solution below
-		// DO NOT write main() function
 		ListNode head = null;
 		ListNode nn = null;
 
 		int carry = 0;
 		while (l1 != null || l2 != null) {
-			int sum = (l1==null?0:l1.val) + (l2==null?0:l2.val) + carry;
+			int sum = (l1 == null ? 0 : l1.val) + (l2 == null ? 0 : l2.val)
+					+ carry;
 			int val = sum;
 			if (sum > 9) {
 				carry = 1;

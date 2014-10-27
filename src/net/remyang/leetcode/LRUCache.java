@@ -1,12 +1,3 @@
-/**
- * Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: get and set.
- * 
- * get(key) - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.
- * 
- * set(key, value) - Set or insert the value if the key is not already present. 
- * When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item.
- * 
- */
 package net.remyang.leetcode;
 
 import java.io.IOException;
@@ -14,8 +5,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author chunkeya
+ * https://oj.leetcode.com/problems/lru-cache/
  * 
+ * Design and implement a data structure for Least Recently Used (LRU) cache. It
+ * should support the following operations: get and set.
+ * 
+ * get(key) - Get the value (will always be positive) of the key if the key
+ * exists in the cache, otherwise return -1.
+ * 
+ * set(key, value) - Set or insert the value if the key is not already present.
+ * When the cache reached its capacity, it should invalidate the least recently
+ * used item before inserting a new item.
  */
 public class LRUCache {
 
@@ -30,7 +30,7 @@ public class LRUCache {
 		}
 
 		System.out.println(System.currentTimeMillis());
-				
+
 		// Last executed input: 1101,
 		LRUCache c = new LRUCache(1101);
 		c.set(883, 1946);
@@ -5057,7 +5057,7 @@ public class LRUCache {
 		c.get(485);
 		c.get(347);
 		c.get(44);
-		
+
 		System.out.println(System.currentTimeMillis());
 	}
 
@@ -5105,7 +5105,7 @@ public class LRUCache {
 			if (cache.size() == mCapacity) {
 				cache.remove(this.head.key);
 				this.head = this.head.next;
-				if (this.head!=null){
+				if (this.head != null) {
 					this.head.prev = null;
 				}
 			}
@@ -5114,17 +5114,17 @@ public class LRUCache {
 			cache.put(key, item);
 			this.connect(this.tail, item);
 			this.tail = item;
-            if (this.head==null)
+			if (this.head == null)
 				this.head = this.tail;
-			}
+		}
 	}
 
 	private void connect(LRUItem prev, LRUItem next) {
-		
+
 		if (prev != null) {
 			prev.next = next;
 		}
-		
+
 		if (next != null) {
 			next.prev = prev;
 		}
@@ -5135,12 +5135,12 @@ public class LRUCache {
 		LRUItem prev = item.prev;
 		LRUItem next = item.next;
 
-		if (item==head){
+		if (item == head) {
 			head = head.next;
 		}
-		
+
 		this.connect(prev, next);
 		this.connect(this.tail, item);
-		this.tail = item;		
+		this.tail = item;
 	}
 }
