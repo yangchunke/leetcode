@@ -1,6 +1,6 @@
 package net.remyang.leetcode;
 
-import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  * https://oj.leetcode.com/problems/longest-consecutive-sequence/
@@ -21,35 +21,35 @@ public class LongestConsecutiveSequence {
 		System.out.println(c.longestConsecutive(new int[] { 100, 4, 200, 1, 3,
 				2 }));
 		System.out.println(c.longestConsecutive(new int[] { 1, 0, 1, 2 }));
+		System.out
+				.println(c.longestConsecutive(new int[] { 1, 2, 5, 4, 3, 0 }));
 	}
 
 	public int longestConsecutive(int[] num) {
-		if (num == null || num.length == 0) {
-			return 0;
-		}
+		int maxLength = 0;
 
-		Arrays.sort(num);
-		int maxLen = 1, localLen = 1;
-		int prevVal = num[0];
-		for (int i = 1; i < num.length; i++) {
-			if (num[i] == prevVal) {
-				continue;
-			} else if (num[i] == prevVal + 1) {
-				prevVal = num[i];
-				localLen++;
-			} else {
-				if (localLen > maxLen) {
-					maxLen = localLen;
-				}
-				prevVal = num[i];
-				localLen = 1;
+		// number to length of consecutive sequence
+		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+
+		for (int n : num) {
+			if (!map.containsKey(n)) {
+
+				// get left and right boundaries
+				int left = map.containsKey(n - 1) ? map.get(n - 1) : 0;
+				int right = map.containsKey(n + 1) ? map.get(n + 1) : 0;
+
+				// set length for the current number
+				int nowLength = left + right + 1;
+				map.put(n, nowLength);
+
+				// update left and right boundaries
+				map.put(n - left, nowLength);
+				map.put(n + right, nowLength);
+
+				// update maximum length
+				maxLength = Math.max(nowLength, maxLength);
 			}
 		}
-
-		if (localLen > maxLen) {
-			maxLen = localLen;
-		}
-
-		return maxLen;
+		return maxLength;
 	}
 }
