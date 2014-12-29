@@ -19,9 +19,42 @@ package net.remyang.leetcode;
  */
 public class ZigZagConversion {
 
+	public static void main(String[] args) {
+		ZigZagConversion c = new ZigZagConversion();
+		System.out.println(c.convert("PAYPALISHIRING", 1));
+		System.out.println(c._convert("PAYPALISHIRING", 1));
+		System.out.println(c.convert("PAYPALISHIRING", 3));
+		System.out.println(c._convert("PAYPALISHIRING", 3));
+		System.out.println(c.convert("PAYPALISHIRING", 4));
+		System.out.println(c._convert("PAYPALISHIRING", 4));
+	}
+
 	public String convert(String s, int nRows) {
-		// Start typing your Java solution below
-		// DO NOT write main() function
+		if (nRows <= 1)
+			return s;
+
+		StringBuilder sb = new StringBuilder();
+
+		int distance = (nRows - 1) * 2;
+
+		for (int r = 0; r < nRows; r++) {
+			boolean down = true;
+			int loc = r;
+			int deltaUp = 2 * r;
+			int deltaDown = (distance - 2 * r);
+			deltaUp = deltaUp == 0 ? deltaDown : deltaUp;
+			deltaDown = deltaDown == 0 ? deltaUp : deltaDown;
+			while (loc < s.length()) {
+				sb.append(s.charAt(loc));
+				loc += (down ? deltaDown : deltaUp);
+				down = !down;
+			}
+		}
+
+		return sb.toString();
+	}
+
+	public String _convert(String s, int nRows) {
 		StringBuffer sb = new StringBuffer();
 		int strLen = s.length();
 
